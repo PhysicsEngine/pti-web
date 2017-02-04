@@ -1,0 +1,4 @@
+*/secret.yaml
+*.swp
+*.pyc
+db.sqlite3
