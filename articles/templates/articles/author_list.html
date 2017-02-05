@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for author in authors %}
+                    <tr>
+                        <td>{{ forloop.counter0|add:authors.start_index }}</td>
+                        <td>
+                            <a href="{% url 'author' author.id %}">{{ author.name }}</a>
+                        </td>
+                        <td>{{ author.rate }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--<div class="pagination">
+        <span class="step-links">
+            {% if authors.has_previous %}
+                <a href="?page={{ authors.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ authors.number }} of {{ authors.paginator.num_pages }}.
+            </span>
+
+            {% if authors.has_next %}
+                <a href="?page={{ authors.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
+    -->
+
+    <ul class="pagination">
+        {% if authors.has_previous %}
+          <li><a href="?page={{ authors.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+          <li class="disabled"><a href="#">&laquo;</a></li>
+        {% endif %}
+
+        {% for num in authors.paginator.page_range %}
+          {% ifequal num authors.number %}
+            <li class="active"><a href="#">{{ num }}<span class="sr-only">(current)</span></a></li>
+          {% else %}
+            <li><a href="?page={{ num }}">{{ num }}</a></li>
+          {% endifequal %}
+        {% endfor %}
+
+        {% if authors.has_next %}
+          <li><a href="?page={{ authors.next_page_number }}">&raquo;</a></li>
+        {% else %}
+          <li class="disabled"><a href="#">&raquo;</a></li>
+        {% endif %}
+      <ul>
+</div>
+
+{% endblock %}
